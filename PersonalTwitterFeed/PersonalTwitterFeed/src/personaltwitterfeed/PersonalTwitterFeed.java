@@ -1,51 +1,65 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package personaltwitterfeed;
 
-import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.layout.StackPane;
-import javafx.stage.Stage;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Scanner;
 
 /**
  *
- * @author jtcurrie
+ * @author CCannon
  */
-public class PersonalTwitterFeed extends Application {
-    
-    @Override
-    public void start(Stage primaryStage) {
-        Button btn = new Button();
-        btn.setText("Say 'Hello World'");
-        btn.setOnAction(new EventHandler<ActionEvent>() {
-            
-            @Override
-            public void handle(ActionEvent event) {
-                System.out.println("Hello World!");
-            }
-        });
-        
-        StackPane root = new StackPane();
-        root.getChildren().add(btn);
-        
-        Scene scene = new Scene(root, 300, 250);
-        
-        primaryStage.setTitle("Hello World!");
-        primaryStage.setScene(scene);
-        primaryStage.show();
-    }
+public class PersonalTwitterFeed {
 
+    public static int MAX_NUMBER_TWEETS = 200;
+    
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        launch(args);
+        String[] tweets = new String[MAX_NUMBER_TWEETS];
+        newTweet(tweets);
     }
     
-}
+    public static String getTimeStamp(){
+        Date now = new Date();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSSZ");
+        return dateFormat.format(now);
+    }
+        
+    /**
+     *
+     * @param a
+     */
+    public static void newTweet(String[] a) {
+        Scanner keyboard = new Scanner(System.in);
+        System.out.println("Welcome to your personal Twitter!");
+        System.out.println("What's your name, tweeter?");
+        
+        String tweeterName = keyboard.nextLine();
+        
+        System.out.println("Nice to meet you " + tweeterName + "!");
+        System.out.println("Enter your tweets and I will add them to your timeline!");
+        
+        int numTweets = 0;
+        
+        while(numTweets < (MAX_NUMBER_TWEETS - 1)) {
+            a[numTweets] = keyboard.nextLine() + getTimeStamp();
+            numTweets++;
+            
+            System.out.println(tweeterName + "'s Personal Twitter Feed:");
+            for(int i = 0; i < numTweets; i++) {
+                System.out.println("- " + a[i]);
+            }
+            
+            System.out.println();
+            System.out.println();
+            System.out.println();
+            System.out.println();
+            
+            if(numTweets < (MAX_NUMBER_TWEETS - 1))
+                System.out.println("Enter your next tweet:");
+        }
+        
+        System.out.println("Your twitter feed is full"); 
+    }
+ }
